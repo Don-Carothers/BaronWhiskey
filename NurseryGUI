@@ -1,0 +1,286 @@
+package src;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class GUIandBackEnd {
+/*	public static void GUI() {
+		ArrayList<String> plantList;
+		ArrayList<String> commName;
+		String loc[] = {"Locations","GLand","GMart","GranW"};
+		plantList.add("Genus/Species");
+		commName.add("Common Name");
+
+		populateGenus(plantList);
+		populateCommName(commName);
+		
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		JButton submit = new JButton("Submit Entry");
+		JRadioButton AddRadio = new JRadioButton("Add ");
+		JRadioButton MoveRadio = new JRadioButton("Move ");
+		JRadioButton SoldRadio= new JRadioButton("Sold ");
+		JRadioButton DunnRadio = new JRadioButton("Dunnage ");
+			ButtonGroup actions = new ButtonGroup();
+			actions.add(AddRadio);
+			actions.add(MoveRadio);
+			actions.add(SoldRadio);
+			actions.add(DunnRadio);
+		JComboBox plantSelect = new JComboBox(plantList);
+		JComboBox commSelect = new JComboBox(commName);
+		JComboBox locations =  new JComboBox(loc);
+		JTextField quantity = new JTextField();
+	
+		
+		panel.setBorder(BorderFactory.createEmptyBorder(30, 100, 10, 30));
+		panel.setLayout(new GridLayout(1, 1));
+		quantity.setBounds(50, 150, 200, 30);
+		panel.add(plantSelect);
+		panel.add(commSelect);
+		panel.add(locations);
+		panel.add(AddRadio);
+		panel.add(MoveRadio);
+		panel.add(SoldRadio);
+		panel.add(DunnRadio);
+		// add radio button for transfer stock
+		panel.add(quantity);
+		panel.add(submit);
+		
+		frame.add(panel, BorderLayout.CENTER);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("IMI_GUI");
+		frame.pack();
+		frame.setVisible(true);
+
+	}
+	*/
+	public static void populateGenus(/*ArrayList<String> plantList*/) {
+/*	
+ 	//create array list of entire genus/species list 
+ 	File inputFile = new File("C:\\Users\\Don\\Desktop\\Granny Graces Inventory\\StarterInventoryTest.xlsx");
+ 	FileInputStream inputStream = new FileInputStream(inputFile);
+ 	XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+ 	XSSFSheet sheet = workbook.getSheet("Inventory");	
+ 	ArrayList<String> plantList;
+ 	plantList.add("Genus/Species");
+  	ArrayList<String> GenusListFull;
+ 	int rowCount = sheet.getPhysicalNumberOfRows();
+	
+ 	
+ 	
+ 	for (int i = 3; i < rowCount; i++){
+ 		inCellValue = getCellInfo(sheet, i, 1);
+ 		GenusListFull.add(inCellValue);
+ 		}
+ 	System.out.println(GenusListFull);
+ //  remove duplicates
+ //  add resulting list to plantList arrayList
+	
+*/
+	}
+	public static void populateCommName(ArrayList<String> CommName) {
+		
+	}
+	public static String getCellInfo(String sheetName, int rowIndex, int columnIndex) throws Exception {
+		File inputFile = new File("C:\\Users\\Don\\Desktop\\Granny Graces Inventory\\StarterInventoryTest.xlsx");
+		FileInputStream inputStream = new FileInputStream(inputFile);
+		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+		XSSFSheet sheet = workbook.getSheet(sheetName);// replace Inventory with sheetName when done testing	
+
+		Cell cell = sheet.getRow(rowIndex).getCell(columnIndex);
+		
+		String inCellValue ="";
+		inCellValue = cell.toString();  
+		System.out.println(inCellValue);
+		
+		cell = sheet.createRow(rowIndex).createCell(columnIndex);
+		
+		workbook.close();
+		inputStream.close();
+		
+		return inCellValue;
+		
+	}
+	public static void setCellInfo(String sheetName, int rowIndex, int columnIndex, int quant) throws Exception {
+		File outFile = new File("C:\\Users\\Don\\Desktop\\Granny Graces Inventory\\StarterInventoryTest.xlsx");
+		FileInputStream inputStream = new FileInputStream(outFile);
+		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+		XSSFSheet sheet = workbook.getSheet(sheetName); // replace with sheetName when done with testing
+
+		Cell cell = sheet.getRow(rowIndex).getCell(columnIndex);
+		cell.setCellValue(quant);
+		
+/*		// next 3 lines are for testing
+		String inCellValue ;
+		inCellValue = cell.toString();
+		System.out.println(inCellValue);
+*/	
+		try {
+			FileOutputStream output = new FileOutputStream(outFile);
+			workbook.write(output);
+			workbook.close();
+			output.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Integer getColumnNum(String loc, String size) {
+		Integer colNum = 1;
+/*		
+ * 	if (loc.equalTo.("GLand")) {
+ * 		if (size.equalTo("2.5"))
+ * 			colNum = 5;
+ *  	if (size.equalTo("3.5"))
+ *  		colNum = 6; 	
+ * 	}	if (size.equalTo("4.5"))
+ * 			cellNum = 7;
+ *		if (size.equalTo("1 Gal"))
+ * 			cellNum = 8;
+ * 		if (size.equalTo("2 Gal"))
+ * 			cellNum = 9; 	
+ * 		if (size.equalTo("3 Gal"))
+ * 			cellNum = 10;
+ * 		if (size.equalTo("5 Gal"))
+ * 			cellNum = 11;
+ * 	
+ * 	if else (loc.equalTo.("GMart")){
+ * 		if (size.equalTo("2.5"))
+ * 			cellNum = 12;
+ * 		if (size.equalTo("3.5"))
+ * 			cellNum = 13;
+ * 		if (size.equalTo("4.5"))
+ * 			cellNum = 14;
+ * 		if (size.equalTo("1 Gal"))
+ * 			cellNum = 15;
+ * 		if (size.equalTo("2 Gal"))
+ * 			cellNum = 16;
+ * 		if (size.equalTo("3 Gal"))
+ * 			cellNum = 17;
+ * 		if (size.equalTo("5 Gal"))
+ * 			cellNum = 18; 	
+ * 	}
+ * 	if else (loc.equalTo.("GranW"){
+ * 		if (size.equalTo("2.5"))
+ * 			cellNum = 19;
+ * 		if (size.equalTo("3.5"))
+ * 			cellNum = 20;
+ * 		if (size.equalTo("4.5"))
+ * 			cellNum = 21;
+ * 		if (size.equalTo("1 Gal"))
+ * 			cellNum = 22;
+ * 		if (size.equalTo("2 Gal"))
+ * 			cellNum = 23;
+ * 		if (size.equalTo("3 Gal"))
+ * 			cellNum = 24;
+ * 		if (equalTo("5 Gal"))
+ * 			cellNum = 25; 	
+ * 	}
+ * 	else{
+ * 		// show dialog box to pick a location.
+ * 	}
+*/	
+		return colNum;
+	}
+	public static Integer getRowNum(String species, String name) {
+	Integer cellRow = 3;
+/* 	
+ * 	if (Species.equalTo.species){
+ * 		if (!Name.equalTo.name){
+ *			cellRow++;
+ * 		}
+ * 	}
+ * 	else{
+ * 		cellRow++;
+ * 	}		
+ */
+	return cellRow;
+	}
+
+	public static void verifyBox(String recordVerify) {
+/*	Display box with record to be made
+ * 		submit changes to inventory
+ * 		or edit entry
+*/
+	}
+	public static void addTransRec(String TransType, int quant, String PlantName, String Loc) {
+/*	Find first null row on transaction sheet
+ * 	Enter passed information to Transaction Record in appropriate cells + date
+ * 		will need multiple versions based on the information passed
+*/	
+	}
+	
+	public static void addStock(String Genus, String name, String loc, String size, int quant){
+/*	
+ * 	int column = getColumnNum(loc, size);
+ * 	int row = getRowNum(Genus, name);	
+ * 	int cellQuant = getCellInfo("Inven", row, column);	
+ * 
+ * 	cellQuant += quant;
+ * 	setCellInfo("Inven", row, column, cellQuant);
+ * 
+ * 	Display box for changes made with (verification, submission)
+ * 	String plantName = Genus + ", " name;
+ * 
+ * 	addTransRec("Added into Stock", quant, plantName);
+*/
+	}
+	
+	public static void moveStock(String species, String name, int quant, String locfrom, String locTo) {
+/*
+ * 	error check to see if cellFrom has enough stock to make stock moving at location
+ * 		prompt to re-enter correct quantity if it does not
+ * 	cellFrom -= quant;
+ *  cellTo += quant;
+ * 	Display box for changes made with (verification, submission)
+ * 	addTransRec("Location Change", quant, plantName, LocFrom, LocTo);
+*/
+	}
+	public static void transStock(String species, String name, String size, int quant) {
+/*	from cellNum(species, name, size, loc);
+ * 		error check to see if there are enough at said location, if not prompt to edit entry
+ * 	get the to location,
+ * 	String fromCellNum -= quant;
+ * 	Calculate the toCellNum by next size up and location;
+ * 	String toCellNum += quant;
+ * 	String plantName = species + ", " name;
+ *	Display box for changes made with (verification, submission)
+ * 	addTransRec("Up sized", quant, plantName, LocFrom, LocTo);		
+*/
+	}
+	public static void soldStock(String species, String name, String size, String loc,int quant ) {
+/*	cellNum(species, name, size, location)
+ * 		error check quant does not exceed onhand;
+ * 	cellNum -= quant;
+ *	String plantName = species + ", " name;
+ *	Display box for changes made with (verification, submission)
+ * 	addTransRec("Sold", quant, plantName, LocFrom, LocTo);		 		
+*/
+	}
+	public static void dunnStock() {
+/*	cellNum(species, name, size, location)
+ * 		error check quant does not exceed onhand;
+ * 	cellNum -= quant;
+ * 	String plantName = species + ", " name;
+ *	Display box for changes made with (verification, submission)
+ * 	addTransRec("Dunnage", quant, plantName, LocFrom, LocTo);		
+*/
+	}
+	
+	
+	public static void main(String[] args) throws Exception {
+	
+		getCellInfo("Inven", 2, 1); // tested working
+		setCellInfo("Inven", 2, 5, 15); // tested working
+	}
+}
